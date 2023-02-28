@@ -4,17 +4,20 @@ import Col from "react-bootstrap/Col"
 import { AddModal } from "./AddModal"
 import { useState } from "react"
 
-const Doctors = ({ doctors }) => {
+const Doctors = ({ doctors, appointments, setAppointments }) => {
   const [show, setShow] = useState(false)
+  const [selectedDrName, setSelectedDrName] = useState("")
 
   // const handleClose = () => setShow(false)
   // const handleShow = () => setShow(true)
 
-  const handleClick = () => {
+  const handleClick = (drName) => {
     // handleShow()
     setShow(true)
+    setSelectedDrName(drName)
   }
 
+  console.log(selectedDrName)
   return (
     <Container className="p-2">
       <h3 className="display-6 mb-3" style={{ color: "rgb(166, 18, 189)" }}>
@@ -28,7 +31,7 @@ const Doctors = ({ doctors }) => {
               src={dr.img}
               alt={dr.name}
               className="img-thumbnail doctor-img"
-              onClick={handleClick}
+              onClick={() => handleClick(dr.name)}
             />
             <h5>{dr.name}</h5>
             <h6>{dr.dep}</h6>
@@ -36,7 +39,13 @@ const Doctors = ({ doctors }) => {
         ))}
       </Row>
       {/* <AddModal show={show} handleClose={handleClose} /> */}
-      <AddModal show={show} handleClose={() => setShow(false)} />
+      <AddModal
+        show={show}
+        handleClose={() => setShow(false)}
+        drName={selectedDrName}
+        appointments={appointments}
+        setAppointments={setAppointments}
+      />
     </Container>
   )
 }
